@@ -94,7 +94,7 @@
             var chance = Math.random(); // Gera um número aleatório entre 0 e 1
             
             // Verifica se a chance é menor ou igual a 0.3 (30%)
-            if (chance <= 0.8) {
+            if (chance = 0.2) {
                 var imagem = document.getElementById("imagem");
                 var imagensDisponiveis = ["assets/image.png"];
                 // Adicione aqui o caminho para as suas imagens
@@ -138,6 +138,11 @@
 
         // Adiciona um evento de clique para cada frase
         frase.addEventListener("click", function() {
+            var chance = Math.random(); // Gera um número aleatório entre 0 e 1
+
+            if (chance <= 0.040) { // Chance de 50% de aparecer a imagem
+                mostrarImagem(); // Chama a função para mostrar a imagem
+            }
             fraseClicada.textContent = ""; // Remove o conteúdo da frase clicada
             fraseClicada.style.opacity = "0"; // Garante que a frase clicada não seja visível
             fraseClicada.style.pointerEvents = "none"; // Garante que a frase clicada não interfira com os cliques em outros elementos
