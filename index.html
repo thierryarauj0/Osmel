@@ -33,6 +33,13 @@
             color: black; /* Cor da fonte da frase principal */
         }
 
+        .textIntro{
+
+            color: black;
+            font-size: 50px;
+            margin-left: 30px;
+        }
+
         .animation {
             animation: fadeOut 1s forwards; /* Animação de fade out em 1 segundo */
         }
@@ -87,6 +94,13 @@
     </style>
 </head>
 <body>
+    <div class="textIntro" id="textIntro">
+    <p>Bem-vindo ao Osmel Clicker!</p>
+    <p>Este é um jogo onde você ganha pontos clicando nas frases do Osmel.</p>
+    <p>No entanto, se uma imagem do Osmel aparecer, você perderá 10 pontos!</p>
+    <p> ( Para jogar basta clicar no Osmel Clicker )</p>
+    </div>
+
     <img id="imagem" src="" alt="Imagem Aleatória">
     
     <script>
@@ -122,7 +136,7 @@
         });
     </script>
     <div class="frase-container">
-        <p class="frase" id="frase">Osmel</p>
+        <p class="frase" id="frase">Osmel Clicker</p>
         <p class="frase-clicada" id="fraseClicada"></p> <!-- Div para a nova frase clicada -->
         <p class="contador" id="contador"></p> <!-- Div para o contador -->
     </div>
@@ -136,6 +150,7 @@
         var fraseClicada = document.getElementById("fraseClicada");
         var contadorElement = document.getElementById("contador"); // Seleciona o elemento do contador
         var imagem = document.getElementById("imagem"); // Seleciona a imagem
+        var textIntro = document.getElementById("textIntro"); // Seleciona o elemento da introdução
         // Adiciona um evento de clique para cada frase
         frase.addEventListener("click", function() {
 
@@ -149,7 +164,7 @@
             fraseClicada.style.pointerEvents = "none"; // Garante que a frase clicada não interfira com os cliques em outros elementos
 
             contador++; // Incrementa o contador a cada clique
-            contadorElement.textContent = "Cliques: " + contador; // Atualiza o texto do contador
+            contadorElement.textContent = "Pontos: " + contador; // Atualiza o texto do contador
 
             frase.classList.add("animation"); // Adiciona a classe de animação
             setTimeout(function() {
@@ -157,6 +172,7 @@
                 i = (i + 1) % frases.length; // Incrementa o índice para a próxima frase
                 frase.classList.remove("animation"); // Remove a classe de animação
             }, 100); // Espera 1 segundo antes de atualizar a frase
+            textIntro.style.display = "none";
         });
         // Adiciona um evento de clique para a imagem
         imagem.addEventListener("click", function() {
@@ -171,7 +187,7 @@
             var imagemAleatoria = imagensDisponiveis[Math.floor(Math.random() * imagensDisponiveis.length)]; // Escolhe uma imagem aleatória da lista
             imagem.src = imagemAleatoria; // Define o src da imagem
             imagem.style.display = "block"; // Mostra a imagem
-            contador -= 10; // Decrementa o contador em 10 cliques
+            contador -= 0; // Decrementa o contador em 10 cliques
             contadorElement.textContent = "Cliques: " + contador; // Atualiza o texto do contador
         }
 
