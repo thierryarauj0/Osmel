@@ -135,9 +135,10 @@
         var frase = document.getElementById("frase");
         var fraseClicada = document.getElementById("fraseClicada");
         var contadorElement = document.getElementById("contador"); // Seleciona o elemento do contador
-
+        var imagem = document.getElementById("imagem"); // Seleciona a imagem
         // Adiciona um evento de clique para cada frase
         frase.addEventListener("click", function() {
+
             var chance = Math.random(); // Gera um número aleatório entre 0 e 1
 
             if (chance <= 0.040) { // Chance de 50% de aparecer a imagem
@@ -157,6 +158,22 @@
                 frase.classList.remove("animation"); // Remove a classe de animação
             }, 100); // Espera 1 segundo antes de atualizar a frase
         });
+        // Adiciona um evento de clique para a imagem
+        imagem.addEventListener("click", function() {
+            imagem.style.display = "none"; // Oculta a imagem quando clicada
+            contador -= 10; // Decrementa o contador em 10 cliques
+            contadorElement.textContent = "Cliques: " + contador; // Atualiza o texto do contador
+        });
+
+        function mostrarImagem() {
+            var imagensDisponiveis = ["assets/image.png"];
+            // Adicione aqui o caminho para as suas imagens
+            var imagemAleatoria = imagensDisponiveis[Math.floor(Math.random() * imagensDisponiveis.length)]; // Escolhe uma imagem aleatória da lista
+            imagem.src = imagemAleatoria; // Define o src da imagem
+            imagem.style.display = "block"; // Mostra a imagem
+            contador -= 10; // Decrementa o contador em 10 cliques
+            contadorElement.textContent = "Cliques: " + contador; // Atualiza o texto do contador
+        }
 
         // Configura um intervalo para trocar as frases a cada 5 segundos
     </script>
