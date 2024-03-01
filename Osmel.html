@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Impact, sans-serif;
+            font-size: 80px;
+            font-weight: bold;
+        }
+
+        #frase {
+            opacity: 1;
+            transition: opacity 1s;
+        }
+    </style>
+</head>
+<body>
+    <p id="frase">Osmel</p>
+
+    <script>
+        var frases = ["Vish!", "Ô peão rasgado da p****!", "Te acalma moreno!", "Essa é a ideia."];
+        var i = 0;
+
+        setInterval(function() {
+            var frase = document.getElementById("frase");
+            frase.style.opacity = 0;
+
+            setTimeout(function() {
+                frase.innerHTML = frases[i];
+                frase.style.opacity = 1;
+                i = (i + 1) % frases.length;
+            }, 1000);
+        }, 5000);
+    </script>
+</body>
+</html>
