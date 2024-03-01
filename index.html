@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,29 +16,144 @@
             font-weight: bold;
         }
 
-        #frase {
-            opacity: 1;
+        #imagem {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 9999;
+        }
+
+        .frase {
+            opacity: 1; /* Inicialmente visível */
             transition: opacity 1s;
+            cursor: pointer; /* Altera o cursor para indicar que a frase é clicável */
+            color: black; /* Cor da fonte da frase principal */
+        }
+
+        .animation {
+            animation: fadeOut 1s forwards; /* Animação de fade out em 1 segundo */
+        }
+
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        .frase-container {
+            position: relative;
+            padding: 20px; /* Adiciona espaço ao redor da frase principal */
+        }
+
+        .frase-clicada {
+            position: absolute;
+            top: calc(100% + 20px); /* Aparece abaixo da frase principal */
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 1;
+            pointer-events: none; /* Evita que os elementos de frase atrapalhem os cliques em outros elementos */
+            color: black; /* Cor da fonte da nova frase */
+            z-index: 9999; /* Garante que o novo elemento apareça em cima da frase principal */
+        }
+
+        /* Estilos para as divs adicionais */
+        .div-lateral {
+            position: absolute;
+            top: 50%;
+            width: 20px; /* Largura das divs laterais */
+            height: 80px; /* Altura das divs laterais */
+            background-color: white; /* Cor de fundo das divs laterais */
+            z-index: 9998; /* Garante que as divs laterais apareçam atrás das frases */
+        }
+
+        .div-lateral-esquerda {
+            left: 0;
+        }
+
+        .div-lateral-direita {
+            right: 0;
+        }
+
+        .div-superior {
+            position: absolute;
+            top: 0;
+            width: calc(100% - 40px); /* Largura da div superior */
+            height: 20px; /* Altura da div superior */
+            background-color: white; /* Cor de fundo da div superior */
+            z-index: 9998; /* Garante que a div superior apareça atrás das frases */
         }
     </style>
 </head>
 <body>
-    <p id="frase">Osmel</p>
+    <img id="imagem" src="" alt="Imagem Aleatória">
+    
+    <script>
+        function mostrarImagem() {
+            var chance = Math.random(); // Gera um número aleatório entre 0 e 1
+            
+            // Verifica se a chance é menor ou igual a 0.3 (30%)
+            if (chance <= 0.8) {
+                var imagem = document.getElementById("imagem");
+                var imagensDisponiveis = ["assets/image.png"];
+                // Adicione aqui o caminho para as suas imagens
+                var imagemAleatoria = imagensDisponiveis[Math.floor(Math.random() * imagensDisponiveis.length)]; // Escolhe uma imagem aleatória da lista
+                imagem.src = imagemAleatoria; // Define o src da imagem
+                imagem.style.display = "block"; // Mostra a imagem
+            }
+        }
+        
+        // Adiciona um evento de clique ao corpo da página
+        document.body.addEventListener("click", function(event) {
+            var x = event.clientX; // Obtém a posição X do clique
+            var y = event.clientY; // Obtém a posição Y do clique
+            
+            var larguraTela = window.innerWidth; // Obtém a largura da tela
+            var alturaTela = window.innerHeight; // Obtém a altura da tela
+            
+            var margem = 20; // Margem para o meio da tela
+            
+            // Verifica se o clique está dentro da margem no meio da tela
+            if (x >= larguraTela / 2 - margem && x <= larguraTela / 2 + margem &&
+                y >= alturaTela / 2 - margem && y <= alturaTela / 2 + margem) {
+                mostrarImagem(); // Mostra a imagem se o clique for no meio da tela
+            }
+        });
+    </script>
+    <div class="frase-container">
+        <p class="frase" id="frase">Osmel</p>
+        <p class="frase-clicada" id="fraseClicada"></p> <!-- Div para a nova frase clicada -->
+        <p class="contador" id="contador"></p> <!-- Div para o contador -->
+    </div>
+ 
 
     <script>
-        var frases = ["Vish!", "Ô peão rasgado da p****!", "Te acalma moreno!", "Essa é a ideia."];
+        var frases = ["Vish!", "Ô peão rasgado da porra!", "Te acalma moreno!", "Essa é a ideia.", "Conversa Homem!!!", "Se tu quer ir pro silicio essa é a ideia !"];
         var i = 0;
+        var contador = 0; // Inicializa o contador
+        var frase = document.getElementById("frase");
+        var fraseClicada = document.getElementById("fraseClicada");
+        var contadorElement = document.getElementById("contador"); // Seleciona o elemento do contador
 
-        setInterval(function() {
-            var frase = document.getElementById("frase");
-            frase.style.opacity = 0;
+        // Adiciona um evento de clique para cada frase
+        frase.addEventListener("click", function() {
+            fraseClicada.textContent = ""; // Remove o conteúdo da frase clicada
+            fraseClicada.style.opacity = "0"; // Garante que a frase clicada não seja visível
+            fraseClicada.style.pointerEvents = "none"; // Garante que a frase clicada não interfira com os cliques em outros elementos
 
+            contador++; // Incrementa o contador a cada clique
+            contadorElement.textContent = "Cliques: " + contador; // Atualiza o texto do contador
+
+            frase.classList.add("animation"); // Adiciona a classe de animação
             setTimeout(function() {
-                frase.innerHTML = frases[i];
-                frase.style.opacity = 1;
-                i = (i + 1) % frases.length;
-            }, 1000);
-        }, 5000);
+                frase.textContent = frases[i]; // Atualiza o texto da frase principal
+                i = (i + 1) % frases.length; // Incrementa o índice para a próxima frase
+                frase.classList.remove("animation"); // Remove a classe de animação
+            }, 100); // Espera 1 segundo antes de atualizar a frase
+        });
+
+        // Configura um intervalo para trocar as frases a cada 5 segundos
     </script>
 </body>
 </html>
